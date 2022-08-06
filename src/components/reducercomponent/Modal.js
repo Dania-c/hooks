@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Modal() {
+function Modal({ modalContent }) {
     return (
-        <div>Modal</div>
+        <div>{modalContent}</div>
     )
 }
 
