@@ -21,6 +21,31 @@ const reducer = (state, action) => {
                 isModalOpen: true,
                 modalContent: 'user added'
             }
+        case "EMPTY_STRING":
+            return {
+
+                ...state,
+
+                isModalOpen: true,
+                modalContent: action.payload
+            }
+        case "CLOSE_MODAL":
+            return {
+                ...state,
+                isModalOpen: false,
+
+            }
+        case "DELETE":
+
+            const filteredUsers = state.users.filter((d) =>
+                d.id !== action.payload
+
+            );
+            return {
+                ...state,
+
+                users: filteredUsers
+            }
         default:
             return state;
 
@@ -52,21 +77,28 @@ export default function Reducercomponent() {
         e.preventDefault();
         if (name) {
             dispatch({ type: 'ADD', payload: { id: new Date().getTime().toString(), name } });
-
-
             setName('')
         }
         else {
-
+            dispatch({ type: 'EMPTY_STRING', payload: "Enter a name" });
         }
+    }
+
+    const closeModal = () => {
+        dispatch({ type: 'CLOSE_MODAL' });
+    }
+    const deleteItem = (IdItem) => {
+        dispatch({ type: 'DELETE', payload: IdItem })
+        console.log("del")
     }
     return (
         <>
             <h1>Reducercomponent</h1>
-            {state.isModalOpen && <Modal modalContent={state.modalContent} />}
+            {state.isModalOpen && <Modal modalContent={state.modalContent} closeModal={closeModal} />}
             <p>m</p>
             <ul>
-                {state.users && state.users.map((d) => <li key={d.id}>{d.name}</li>)}
+                {/* {state.users && state.users.map((d) => <li key={d.id}>{d.name}<button onClick={() => dispatch({ type: 'DELETE', payload: d.id })}>   Remove</button></li>)} */}
+                {state.users && state.users.map((d) => <li key={d.id}>{d.name}<button onClick={() => deleteItem(d.id)}>   Remove</button></li>)}
             </ul>
 
             <form onSubmit={handleSubmit}>
