@@ -92,25 +92,26 @@ export default function Reducercomponent() {
         console.log("del")
     }
     return (
-        <>
+        <div className="container">
             <h1>Reducercomponent</h1>
             {state.isModalOpen && <Modal modalContent={state.modalContent} closeModal={closeModal} />}
             <p>m</p>
-            <ul>
+            <ul  >
                 {/* {state.users && state.users.map((d) => <li key={d.id}>{d.name}<button onClick={() => dispatch({ type: 'DELETE', payload: d.id })}>   Remove</button></li>)} */}
-                {state.users && state.users.map((d) => <li key={d.id}>{d.name}<button onClick={() => deleteItem(d.id)}>   Remove</button></li>)}
+                {state.users && state.users.map((d) => <div className="row"><li className="col-6" key={d.id}>{d.name}</li><button className="col-3" onClick={() => deleteItem(d.id)}>   Remove </button></div>)}
             </ul>
 
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form className="container" onSubmit={handleSubmit}>
+                <div className="mb-3 col-4">
                     <input
+                        className="form-control"
                         type='text'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
                 </div>
-                <button type="submit">add</button>
+                <button className="btn btn-primary mb-3" type="submit">add</button>
             </form>
-        </>
+        </div>
     )
 }
